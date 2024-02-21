@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-server
+  namespace: default
+  labels:
+    app: simple-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-server
+  template:
+    metadata:
+      labels:
+        app: simple-server
+    spec:
+      containers:
+      - name: generic-server
+        image: docker.io/pszeto/simple-server
+        imagePullPolicy: Always
+        env:
+        - name: PORT
+          value: "8000"
+        - name: LISTEN_ADDRESS
+          value: "127.0.0.1"
+        ports:
+        - containerPort: 8000
